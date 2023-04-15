@@ -1,4 +1,5 @@
-﻿using EmployeeDirectory.Services;
+﻿using EmployeeDirectory.Data;
+using EmployeeDirectory.Services;
 using EmployeeDirectory.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -18,6 +19,7 @@ namespace EmployeeDirectory
         public static IServiceProvider Services => Host.Services;
 
         internal static void ConfigureServices(HostBuilderContext host, IServiceCollection services) => services
+            .AddDatabase(host.Configuration.GetSection("Database"))
             .AddServices()
             .AddViewModel();
 
