@@ -21,6 +21,7 @@ namespace EmployeeDirectory.Data
                         opt.UseSqlServer(configuration.GetConnectionString(type));
                         break;
                 }
-            });
+            })
+            .AddTransient<DbInitializer>();
     }
 }
