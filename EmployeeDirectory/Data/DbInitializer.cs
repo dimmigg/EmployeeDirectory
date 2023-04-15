@@ -27,7 +27,7 @@ namespace EmployeeDirectory.Data
             _logger.LogInformation("Инициализация БД...");
 
             _logger.LogInformation("Удаление существующей БД...");
-            await _db.Database.EnsureDeletedAsync().ConfigureAwait(false);
+            //await _db.Database.EnsureDeletedAsync().ConfigureAwait(false);
             _logger.LogInformation("Удаление существующей БД выполнена за {0} мс", timer.ElapsedMilliseconds);
 
 

@@ -1,4 +1,5 @@
-﻿using EmployeeDirectory.DAL.Context;
+﻿using EmployeeDirectory.DAL;
+using EmployeeDirectory.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +23,7 @@ namespace EmployeeDirectory.Data
                         break;
                 }
             })
-            .AddTransient<DbInitializer>();
+            .AddTransient<DbInitializer>()
+            .AddRepositoriesInDB();
     }
 }
