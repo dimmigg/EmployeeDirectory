@@ -1,4 +1,7 @@
-﻿using System;
+﻿using EmployeeDirectory.DAL.Emtityes.Base;
+using EmployeeDirectory.ViewModels;
+using EmployeeDirectory.ViewModels.Directory;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +26,13 @@ namespace EmployeeDirectory.Views
         public DirectoryView()
         {
             InitializeComponent();
+        }
+
+        private void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            if (DataContext is DirectoryViewModel dc)
+                if (e.NewValue is Entity item)
+                    dc.SelectedItem = item;
         }
     }
 }

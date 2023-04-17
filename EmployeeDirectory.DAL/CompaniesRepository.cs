@@ -15,20 +15,6 @@ namespace EmployeeDirectory.DAL
             _db = db;
         }
 
-        public override IQueryable<Company> Items => GetItems(); //base.Items.Include(item => item.Departments).ThenInclude(c => c.Employees);
-
-        private IQueryable<Company> GetItems()
-        {
-            var result = base.Items.Include(item => item.Departments).ThenInclude(c => c.Employees);
-            _ = Task.Run(async () =>
-            {
-                foreach (var item in result)
-            {
-                foreach (var department in item.Departments)
-                     department.Director = await _db.Set<Employee>().SingleOrDefaultAsync(emp => emp.Id == department.DirectorId).ConfigureAwait(false);
-            }
-            });
-            return result;
-        }
+        public override IQueryable<Company> Items => base.Items.Include(item => item.Departments).ThenInclude(c => c.Employees);
     }
 }

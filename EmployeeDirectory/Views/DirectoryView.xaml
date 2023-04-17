@@ -4,17 +4,90 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:EmployeeDirectory.Views"
+             xmlns:vm="clr-namespace:EmployeeDirectory.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TextBlock VerticalAlignment="Center"
-                   HorizontalAlignment="Center"
-                   FontSize="30"
-                   FontWeight="Bold"
-                   Text="Справочник">
-            <TextBlock.Effect>
-                <DropShadowEffect ShadowDepth="1"/>
-            </TextBlock.Effect>
-        </TextBlock>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="2"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Vertical"
+                    Grid.Column="0">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Компания"
+                            ToolTip="Добавить Компанию"
+                            Width="90"
+                            Margin="5"/>
+                <Button Content="Отдел"
+                            Width="90"
+                            ToolTip="Добавить Отдел"
+                            Margin="5"/>
+                <Button Content="Сотрудник"
+                            Width="90"
+                            ToolTip="Добавить Сотрудника"
+                            Margin="5"/>
+            </StackPanel>
+            <ScrollViewer Height="350"
+                          Width="300"
+                          VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Auto">
+                <TreeView HorizontalAlignment="Stretch"
+                          Margin="10"
+                          VerticalAlignment="Top"
+                          ItemsSource="{Binding Companies}" 
+                          SelectedItemChanged="TreeView_SelectedItemChanged"
+                          BorderThickness="0">
+                    <TreeView.ItemContainerStyle>
+                        <Style TargetType="{x:Type TreeViewItem}">
+                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                        </Style>
+                    </TreeView.ItemContainerStyle>
+                    <TreeView.ItemTemplate>
+                        <HierarchicalDataTemplate ItemsSource="{Binding Departments}">
+                            <Label Content="{Binding Name}"/>
+                            <HierarchicalDataTemplate.ItemTemplate>
+                                <HierarchicalDataTemplate ItemsSource="{Binding Employees}">
+                                    <Label Content="{Binding Name}"/>
+                                    <HierarchicalDataTemplate.ItemTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding Surname}"/>
+                                        </DataTemplate>
+                                    </HierarchicalDataTemplate.ItemTemplate>
+                                </HierarchicalDataTemplate>
+                            </HierarchicalDataTemplate.ItemTemplate>
+                        </HierarchicalDataTemplate>
+                    </TreeView.ItemTemplate>
+                </TreeView>
+            </ScrollViewer>
+            <StackPanel Orientation="Vertical"
+                        Grid.Column="1">
+
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center">
+                    <Button Content="Изменить"
+                            Width="90"
+                            Margin="5"
+                            IsEnabled="{Binding IsChoiceItem}"/>
+                    <Button Content="Удалить"
+                            Width="90"
+                            Margin="5"
+                            IsEnabled="{Binding IsChoiceItem}"/>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+        <Rectangle Grid.Column="1" Fill="LightGray"></Rectangle>
+
+        <StackPanel Orientation="Vertical"
+                    Grid.Column="2">
+
+            <Frame Content="{Binding CurrentPage}"
+               VerticalAlignment="Top"
+               Margin="10"
+               NavigationUIVisibility="Hidden"
+               Width="300"
+               Height="300"/>
+        </StackPanel>
     </Grid>
 </UserControl>
