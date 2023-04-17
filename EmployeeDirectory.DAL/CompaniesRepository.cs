@@ -2,6 +2,7 @@
 using EmployeeDirectory.DAL.Emtityes;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace EmployeeDirectory.DAL
 {
@@ -19,11 +20,14 @@ namespace EmployeeDirectory.DAL
         private IQueryable<Company> GetItems()
         {
             var result = base.Items.Include(item => item.Departments).ThenInclude(c => c.Employees);
-            foreach (var item in result)
+            _ = Task.Run(async () =>
+            {
+                foreach (var item in result)
             {
                 foreach (var department in item.Departments)
-                    department.Director = _db.Set<Employee>().SingleOrDefault(emp => emp.Id == department.DirectorId);
+                     department.Director = await _db.Set<Employee>().SingleOrDefaultAsync(emp => emp.Id == department.DirectorId).ConfigureAwait(false);
             }
+            });
             return result;
         }
     }

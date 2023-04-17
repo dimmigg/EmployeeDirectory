@@ -7,8 +7,15 @@
         DataContext="{Binding MainWindowViewModel, Source={StaticResource Locator}}"
         mc:Ignorable="d"
         Title="{Binding Title}"
-        Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        Height="450" Width="800"
+        ResizeMode="NoResize">
+    <DockPanel>
+        <Menu IsMainMenu="True">
+            <MenuItem Header="Справочник" Command="{Binding ShowDirectoryViewCommand}"/>
+            <MenuItem Header="Отчеты" Command="{Binding ShowReportsViewCommand}"/>
+        </Menu>
+        <Grid>
+            <ContentControl Content="{Binding CurrentModel}"/>
+        </Grid>
+    </DockPanel>
 </Window>

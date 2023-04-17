@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace EmployeeDirectory.DAL
 {
@@ -22,10 +23,14 @@ namespace EmployeeDirectory.DAL
         private IQueryable<Department> GetItems()
         {
             var result = base.Items.Include(item => item.Company).Include(item => item.Employees);
-            foreach (var item in result)
+            _ = Task.Run(async () =>
             {
-                item.Director = _db.Set<Employee>().SingleOrDefault(emp => emp.Id == item.DirectorId);
-            }
+                foreach (var item in result)
+                {
+                    item.Director = await _db.Set<Employee>().SingleOrDefaultAsync(emp => emp.Id == item.DirectorId).ConfigureAwait(false);
+                }
+            });
+            
             return result;
         }
     }
