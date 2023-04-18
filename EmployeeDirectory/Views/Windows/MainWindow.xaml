@@ -8,8 +8,9 @@
         DataContext="{Binding MainWindowViewModel, Source={StaticResource Locator}}"
         mc:Ignorable="d"
         Title="{Binding Title}"
-        Height="450" Width="800"
-        ResizeMode="NoResize">
+        Height="450" Width="722"
+        ResizeMode="NoResize"
+        Background="WhiteSmoke">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding ShowDirectoryViewCommand}"/>

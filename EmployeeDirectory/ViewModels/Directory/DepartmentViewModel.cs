@@ -5,18 +5,16 @@ namespace EmployeeDirectory.ViewModels.Directory
 {
     internal class DepartmentViewModel : TreeBase
     {
-        public string Name { get; set; }
-        public int DirectorId { get; set; }
-        public Employee Director { get; set; }
-        public ICollection<Employee> Employees { get; set; }
-        public Company Company { get; set; }
+        private Department _currentDepartment;
+        public Department CurrentDepartment
+        {
+            get => _currentDepartment;
+            set => Set(ref _currentDepartment, value);
+        }
 
         public DepartmentViewModel(Department department)
         {
-            Name = department.Name;
-            DirectorId = department.DirectorId;
-            Employees = department.Employees;
-            Company = department.Company;
+            CurrentDepartment = department;
         }
     }
 }

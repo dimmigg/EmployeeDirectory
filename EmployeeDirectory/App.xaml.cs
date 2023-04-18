@@ -4,6 +4,7 @@ using EmployeeDirectory.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Linq;
 using System.Windows;
 
 namespace EmployeeDirectory
@@ -18,6 +19,14 @@ namespace EmployeeDirectory
             ??= Program.CreateHostBuilder(Environment.GetCommandLineArgs()).Build();
         public static IServiceProvider Services => Host.Services;
 
+        public static Window ActiveWindow => Application.Current.Windows
+            .OfType<Window>()
+            .FirstOrDefault(w => w.IsActive);
+
+        public static Window FocusedWindow => Application.Current.Windows
+           .OfType<Window>()
+           .FirstOrDefault(w => w.IsFocused);
+        public static Window CurrentWindow => FocusedWindow ?? ActiveWindow;
         internal static void ConfigureServices(HostBuilderContext host, IServiceCollection services) => services
             .AddDatabase(host.Configuration.GetSection("Database"))
             .AddServices()

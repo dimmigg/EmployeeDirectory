@@ -1,5 +1,7 @@
 ﻿using EmployeeDirectory.DAL.Emtityes;
 using EmployeeDirectory.Interfaces;
+using EmployeeDirectory.Services.Interfaces;
+using MathCore.WPF;
 using MathCore.WPF.Commands;
 using MathCore.WPF.ViewModels;
 using System;
@@ -12,7 +14,9 @@ namespace EmployeeDirectory.ViewModels
     {
         public string _title = "Главное окно программы";
         private readonly IRepository<Department> _departmentRepo;
-        private readonly IRepository<Company> _companyRepository;
+        private readonly IRepository<Company> _companyRepo;
+        private readonly IRepository<Employee> _employeeRepo;
+        private readonly IUserDialogCreator _userDialog;
 
         public string Title 
         {
@@ -35,7 +39,7 @@ namespace EmployeeDirectory.ViewModels
 
         private void OnShowDirectoryCommandExecuted(object? obj)
         {
-            CurrentModel = new DirectoryViewModel(_departmentRepo, _companyRepository);
+            CurrentModel = new DirectoryViewModel(_departmentRepo, _companyRepo, _employeeRepo, _userDialog);
         }
 
         private ICommand _showReportsViewCommand;
@@ -49,11 +53,15 @@ namespace EmployeeDirectory.ViewModels
             CurrentModel = new ReportsViewModel();
         }
 
-        public MainWindowViewModel(IRepository<Department> departmentRepo, IRepository<Company> companyRepository)
+        public MainWindowViewModel(IRepository<Department> departmentRepo,
+                                   IRepository<Company> companyRepo,
+                                   IRepository<Employee> employeeRepo,
+                                   IUserDialogCreator userDialog)
         {
             _departmentRepo = departmentRepo;
-            _companyRepository = companyRepository;
-            var a = _departmentRepo.Items;
+            _companyRepo = companyRepo;
+            _employeeRepo = employeeRepo;
+            _userDialog = userDialog;
         }
     }
 }

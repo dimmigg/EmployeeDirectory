@@ -7,16 +7,24 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DepartmentPage">
 
-    <Grid>
+    <GroupBox Header="Информация об отделе"
+              Background="White">
         <StackPanel Orientation="Vertical">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Наименование Отдела: " />
-                <TextBlock Text="{Binding Name}" />
+                <TextBlock Style="{StaticResource TextBlockCaption}"
+                           Text="Отдел: " />
+                <TextBlock Style="{StaticResource TextBlockInfo}"
+                           Text="{Binding CurrentDepartment.Name}" />
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Руководитель: " />
-                <TextBlock Text="{Binding Director.Name}" />
+                <TextBlock Style="{StaticResource TextBlockCaption}"
+                           Text="Директор: " />
+                <TextBlock Style="{StaticResource TextBlockInfo}">
+                    <Run Text="{Binding CurrentDepartment.Director.Surname}"/>
+                    <Run Text="{Binding CurrentDepartment.Director.FirstName}"/>
+                    <Run Text="{Binding CurrentDepartment.Director.SecondName}"/>
+                </TextBlock>
             </StackPanel>
         </StackPanel>
-    </Grid>
+    </GroupBox>
 </Page>

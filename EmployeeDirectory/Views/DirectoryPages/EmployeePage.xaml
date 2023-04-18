@@ -6,37 +6,51 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="EmployeePage">
-
-    <Grid>
+    <GroupBox Header="Информация о сотруднике"
+              Background="White">
         <StackPanel Orientation="Vertical">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Фамилия: " />
-                <TextBlock Text="{Binding SecondName}" />
+                <TextBlock Style="{StaticResource TextBlockCaption}"
+                           Text="Фамилия: " />
+                <TextBlock Style="{StaticResource TextBlockInfo}"
+                           Text="{Binding CurrentEmployee.Surname}" />
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Имя: " />
-                <TextBlock Text="{Binding FirstName}" />
+                <TextBlock Style="{StaticResource TextBlockCaption}"
+                           Text="Имя: " />
+                <TextBlock Style="{StaticResource TextBlockInfo}"
+                           Text="{Binding CurrentEmployee.FirstName}" />
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Отчество: " />
-                <TextBlock Text="{Binding Surname}" />
+                <TextBlock Style="{StaticResource TextBlockCaption}"
+                           Text="Отчество: " />
+                <TextBlock Style="{StaticResource TextBlockInfo}"
+                           Text="{Binding CurrentEmployee.SecondName}" />
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Дата рождения: " />
-                <TextBlock Text="{Binding Birthday, StringFormat='dd.MM.yyyy'}" />
+                <TextBlock Style="{StaticResource TextBlockCaption}"
+                           Text="Дата рождения: " />
+                <TextBlock Style="{StaticResource TextBlockInfo}"
+                           Text="{Binding CurrentEmployee.Birthday, StringFormat=d, ConverterCulture=ru-RU}" />
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Дата трудоустройства: " />
-                <TextBlock Text="{Binding EmploymentDate, StringFormat='dd.MM.yyyy'}" />
+                <TextBlock Style="{StaticResource TextBlockCaption}"
+                           Text="Дата трудоустройства: " />
+                <TextBlock Style="{StaticResource TextBlockInfo}"
+                           Text="{Binding CurrentEmployee.EmploymentDate, StringFormat=d, ConverterCulture=ru-RU}" />
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Должность: " />
-                <TextBlock Text="{Binding Position.Name}" />
+                <TextBlock Style="{StaticResource TextBlockCaption}"
+                           Text="Должность: " />
+                <TextBlock Style="{StaticResource TextBlockInfo}"
+                           Text="{Binding CurrentEmployee.Position}" />
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Зарплата: " />
-                <TextBlock Text="{Binding Wage}" />
+                <TextBlock Style="{StaticResource TextBlockCaption}"
+                           Text="Заработная плата: " />
+                <TextBlock Style="{StaticResource TextBlockInfo}"
+                           Text="{Binding CurrentEmployee.Wage, StringFormat={}{0} руб.}" />
             </StackPanel>
         </StackPanel>
-    </Grid>
+    </GroupBox>
 </Page>
