@@ -4,6 +4,8 @@ using EmployeeDirectory.Interfaces;
 using EmployeeDirectory.Services.Interfaces;
 using EmployeeDirectory.Services.UserDialog;
 using EmployeeDirectory.ViewModels.Directory;
+using MathCore.Functions.Differentiable;
+using MathCore.WPF;
 using MathCore.WPF.Commands;
 using MathCore.WPF.ViewModels;
 using Microsoft.EntityFrameworkCore;
@@ -76,13 +78,16 @@ namespace EmployeeDirectory.ViewModels
 
         private ICommand _addItemCommand;
         public ICommand AddItemCommand => _addItemCommand
-            ??= new LambdaCommandAsync(OnAddItemCommandExecuted, CanAddItemCommandExecute);
+            ??= new LambdaCommand<string>(OnAddItemCommandExecuted, CanAddItemCommandExecute);
 
-        private bool CanAddItemCommandExecute() => IsChoiceItem;
+        private bool CanAddItemCommandExecute(string type) => true;
 
-        private async Task OnAddItemCommandExecuted()
+        private async void OnAddItemCommandExecuted(string type)
         {
-            
+            var dialog = _userDialog.CreateUserDialog(type);
+            if (dialog == null) return;
+            if (await dialog.Add())
+                await OnLoadDataCommandExecuted();
         }
 
         private ICommand _editItemCommand;
@@ -105,9 +110,14 @@ namespace EmployeeDirectory.ViewModels
 
         private bool CanRemoveItemCommandExecute(Entity entity) => entity != null || SelectedItem != null;
 
-        private void OnRemoveItemCommandExecuted(Entity entity)
+        private async void OnRemoveItemCommandExecuted(Entity entity)
         {
             var itemToRemove = entity ?? SelectedItem;
+            var dialog = _userDialog.CreateUserDialog(itemToRemove);
+            if (dialog == null) return;
+            if (await dialog.Remove(itemToRemove))
+                await OnLoadDataCommandExecuted();
+            
         }
 
         public DirectoryViewModel(

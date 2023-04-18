@@ -7,8 +7,9 @@ namespace EmployeeDirectory.Services.UserDialog
 {
     abstract class UserDialogBase : IUserDialog
     {
+        public abstract Task<bool> Remove(Entity entity);
         public abstract Task<bool> Edit(Entity entity);
-        public abstract bool Add();
+        public abstract Task<bool> Add();
 
         public bool ConfirmInformation(string Information, string Caption) => MessageBox
            .Show(

@@ -3,6 +3,7 @@ using EmployeeDirectory.DAL.Emtityes.Base;
 using EmployeeDirectory.Interfaces;
 using EmployeeDirectory.ViewModels.Directory.Dialog;
 using EmployeeDirectory.Views.DirectoryPages.Dialogs;
+using System;
 using System.Threading.Tasks;
 
 namespace EmployeeDirectory.Services.UserDialog
@@ -41,10 +42,10 @@ namespace EmployeeDirectory.Services.UserDialog
             return false;
         }
 
-        public override bool Add()
+        public override async Task<bool> Add()
         {
             var company = new Company();
-            var addModel = new CompanyEditorViewModel(company);
+            var addModel = new CompanyEditorViewModel(company) { Created = DateTime.Today};
 
             var companyEditor = new CompanyEditor
             {
@@ -53,14 +54,25 @@ namespace EmployeeDirectory.Services.UserDialog
 
             if (companyEditor.ShowDialog() != true) return false;
 
-            company.Name = addModel.Name;
-            company.Name = addModel.Name;
-            company.Address = addModel.Address;
+            company.Name = addModel.Name ?? "";
+            company.Address = addModel.Address ?? "";
             company.Created = addModel.Created;
-            company.Departments = addModel.Departments;
 
-            _companyRepo.Update(company);
+            await _companyRepo.AddAsync(company).ConfigureAwait(false); ;
             return true;
+        }
+
+        public override async Task<bool> Remove(Entity entity)
+        {
+            if (entity is Company company)
+            {
+                if (ConfirmWarning($"Вы хотите удалить компанию {company.Name}?", "Удаление компании"))
+                {
+                    await _companyRepo.RemoveAsync(company.Id).ConfigureAwait(false);
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

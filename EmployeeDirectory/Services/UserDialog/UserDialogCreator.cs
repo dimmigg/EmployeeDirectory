@@ -28,5 +28,17 @@ namespace EmployeeDirectory.Services.UserDialog
             else
                 return null;
         }
+
+        public IUserDialog CreateUserDialog(string type)
+        {
+            switch (type)
+            {
+                case "Company":
+                    return new UserDialogCompany(_companyRepo);
+                default:
+                    break;
+            }
+            return null;
+        }
     }
 }

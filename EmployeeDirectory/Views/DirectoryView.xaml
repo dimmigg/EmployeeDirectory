@@ -61,7 +61,9 @@
                            HorizontalAlignment="Center">
                     <Button Content="Компания"
                             ToolTip="Добавить Компанию"
-                            Margin="5"/>
+                            Margin="5"
+                            Command="{Binding AddItemCommand}"
+                            CommandParameter="Company"/>
                     <Button Content="Отдел"
                                 ToolTip="Добавить Отдел"
                                 Margin="5"/>

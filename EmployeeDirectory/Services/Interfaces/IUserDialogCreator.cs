@@ -5,5 +5,6 @@ namespace EmployeeDirectory.Services.Interfaces
     interface IUserDialogCreator
     {
         IUserDialog CreateUserDialog(Entity entity);
+        IUserDialog CreateUserDialog(string type);
     }
 }

@@ -3,6 +3,7 @@ using EmployeeDirectory.DAL.Emtityes.Base;
 using EmployeeDirectory.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -59,7 +60,8 @@ namespace EmployeeDirectory.DAL
 
         public async Task RemoveAsync(int id, CancellationToken cancel = default)
         {
-            _db.Remove(id);
+            var item = _set.Local.FirstOrDefault(i => i.Id == id) ?? new T { Id = id };
+            _db.Remove(item);
             if (AutoSaveChanges)
                 await _db.SaveChangesAsync(cancel).ConfigureAwait(false);
         }
