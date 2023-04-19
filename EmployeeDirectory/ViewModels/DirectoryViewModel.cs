@@ -1,15 +1,14 @@
 ﻿using EmployeeDirectory.DAL.Emtityes;
 using EmployeeDirectory.DAL.Emtityes.Base;
 using EmployeeDirectory.Interfaces;
+using EmployeeDirectory.Service;
 using EmployeeDirectory.Services.Interfaces;
-using EmployeeDirectory.Services.UserDialog;
 using EmployeeDirectory.ViewModels.Directory;
-using MathCore.Functions.Differentiable;
-using MathCore.WPF;
 using MathCore.WPF.Commands;
 using MathCore.WPF.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -29,16 +28,15 @@ namespace EmployeeDirectory.ViewModels
             set => Set(ref _isChoiceItem, value);
         }
 
-        private Entity selectedItem;
+        private Entity _selectedItem;
 
         public Entity SelectedItem
         {
-            get => selectedItem;
+            get => _selectedItem;
             set
             {
-                ChangeSelectedItem(value);
-                selectedItem = value;
-                OnPropertyChanged(nameof(SelectedItem));
+                if(Set(ref _selectedItem, value))
+                    ChangeSelectedItem(value);
             }
         }
 
@@ -49,19 +47,19 @@ namespace EmployeeDirectory.ViewModels
             set => Set(ref _currentPage, value);
         }
 
-        private IList<Company> _companies;
-        public IList<Company> Companies
+        private ICollection<Company> _companies = new List<Company>();
+        public ICollection<Company> Companies
         {
             get => _companies;
             set => Set(ref _companies, value);
         }
 
-        private IList<Employee> _employees;
-        public IList<Employee> Employees
+        private ObservableCollection<Employee> _employees = new ObservableCollection<Employee>();
+        public ObservableCollection<Employee> Employees
         {
             get => _employees;
             set => Set(ref _employees, value);
-        }
+        } 
 
         private ICommand _loadDataCommand;
 
@@ -73,7 +71,7 @@ namespace EmployeeDirectory.ViewModels
         private async Task OnLoadDataCommandExecuted()
         {
             Companies = await _companyRepo.Items.ToListAsync();
-            Employees = await _employeeRepo.Items.ToListAsync();
+            Employees.AddClear(await _employeeRepo.Items.ToListAsync());
         }
 
         private ICommand _addItemCommand;
@@ -100,7 +98,7 @@ namespace EmployeeDirectory.ViewModels
         {
             var dialog = _userDialog.CreateUserDialog(entity);
             if(dialog == null) return;
-            if(await dialog.Edit(entity))
+            if (await dialog.Edit(entity))
                 await OnLoadDataCommandExecuted();
         }
 

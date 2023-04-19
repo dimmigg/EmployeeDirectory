@@ -14,5 +14,7 @@ namespace EmployeeDirectory.DAL.Emtityes
         [Required]
         public DateTime Created { get; set; }
         public virtual ICollection<Department> Departments { get; set; }
+
+        public override string ToString() => Name;
     }
 }

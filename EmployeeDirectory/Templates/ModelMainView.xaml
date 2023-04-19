@@ -3,8 +3,11 @@
                     xmlns:system="clr-namespace:System;assembly=System.Runtime"
                     xmlns:vm="clr-namespace:EmployeeDirectory.ViewModels"
                     xmlns:vmd="clr-namespace:EmployeeDirectory.ViewModels.Directory"
+                    xmlns:vmr="clr-namespace:EmployeeDirectory.ViewModels.Reports"
                     xmlns:view="clr-namespace:EmployeeDirectory.Views"
                     xmlns:viewd="clr-namespace:EmployeeDirectory.Views.DirectoryPages"
+                    xmlns:viewr="clr-namespace:EmployeeDirectory.Views.ReportsPages"
+                    xmlns:models="clr-namespace:EmployeeDirectory.DAL.Emtityes;assembly=EmployeeDirectory.DAL"
                     >
     <DataTemplate DataType="{x:Type vm:DirectoryViewModel}">
         <view:DirectoryView DataContext="{Binding}"/>
@@ -22,7 +25,22 @@
         <viewd:EmployeePage DataContext="{Binding}"/>
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type vmr:SalaryReportViewModel}">
+        <viewr:SalaryReportPage DataContext="{Binding}"/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vmr:EmployeesListViewModel}">
+        <viewr:EmployeesListPage DataContext="{Binding}"/>
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type system:DateTime}">
         <TextBlock Text="{Binding StringFormat='dd.MM.yyyy HH:mm'}"/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type models:Employee}">
+        <TextBlock>
+            <Run Text="{Binding Surname}"/>
+            <Run Text="{Binding FirstName}"/>
+            <Run Text="{Binding SecondName}"/>
+        </TextBlock>
     </DataTemplate>
 </ResourceDictionary>

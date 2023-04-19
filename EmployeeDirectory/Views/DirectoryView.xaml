@@ -31,16 +31,23 @@
                           BorderThickness="0"
                           ScrollViewer.VerticalScrollBarVisibility="Auto"
                           Background="WhiteSmoke">
-                    
                     <TreeView.ItemTemplate>
-                        <HierarchicalDataTemplate ItemsSource="{Binding Departments}">
+                        <HierarchicalDataTemplate ItemsSource="{Binding Departments, UpdateSourceTrigger=PropertyChanged}">
                             <Label Content="{Binding Name}"/>
                             <HierarchicalDataTemplate.ItemTemplate>
                                 <HierarchicalDataTemplate ItemsSource="{Binding Employees}">
                                     <Label Content="{Binding Name}"/>
                                     <HierarchicalDataTemplate.ItemTemplate>
                                         <DataTemplate>
-                                            <Label Content="{Binding Surname}"/>
+                                            <Label>
+                                                <Label.Content>
+                                                    <TextBlock>
+                                                        <Run Text="{Binding Surname}"/>
+                                                        <Run Text="{Binding FirstName}"/>
+                                                        <Run Text="{Binding SecondName}"/>
+                                                    </TextBlock>
+                                                </Label.Content>
+                                            </Label>
                                         </DataTemplate>
                                     </HierarchicalDataTemplate.ItemTemplate>
                                 </HierarchicalDataTemplate>
@@ -65,11 +72,15 @@
                             Command="{Binding AddItemCommand}"
                             CommandParameter="Company"/>
                     <Button Content="Отдел"
-                                ToolTip="Добавить Отдел"
-                                Margin="5"/>
+                            ToolTip="Добавить Отдел"
+                            Margin="5"
+                            Command="{Binding AddItemCommand}"
+                            CommandParameter="Department"/>
                     <Button Content="Сотрудник"
-                                ToolTip="Добавить Сотрудника"
-                                Margin="5"/>
+                            ToolTip="Добавить Сотрудника"
+                            Margin="5"
+                            Command="{Binding AddItemCommand}"
+                            CommandParameter="Employee"/>
             </WrapPanel>
             </GroupBox>
             <GroupBox Header="Редактирование"

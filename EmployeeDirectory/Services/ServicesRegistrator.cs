@@ -8,6 +8,8 @@ namespace EmployeeDirectory.Services
     {
         public static IServiceCollection AddServices(this IServiceCollection services) => services
             .AddTransient<IUserDialogCreator, UserDialogCreator>()
-            .AddTransient<IUserDialog, UserDialogCompany>();
+            .AddTransient<IUserDialog, UserDialogCompany>()
+            .AddTransient<IUserDialog, UserDialogDepartment>()
+            .AddTransient<IUserDialog, UserDialogEmployee>();
     }
 }

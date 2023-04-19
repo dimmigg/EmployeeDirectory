@@ -22,6 +22,9 @@ namespace EmployeeDirectory.DAL.Emtityes
         [Column(TypeName = "decimal(18,2)")]
         [Required]
         public decimal Wage { get; set; }
-        public virtual Department Department { get; set; } 
+        public virtual Department Department { get; set; }
+        public virtual int DepartmentId { get; set; }
+
+        public override string ToString() => $"{Surname} {FirstName} {SecondName}";
     }
 }

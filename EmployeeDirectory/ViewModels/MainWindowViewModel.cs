@@ -50,7 +50,7 @@ namespace EmployeeDirectory.ViewModels
 
         private void OnShowReportsCommandExecuted(object? obj)
         {
-            CurrentModel = new ReportsViewModel();
+            CurrentModel = new ReportsViewModel(_departmentRepo, _companyRepo, _employeeRepo);
         }
 
         public MainWindowViewModel(IRepository<Department> departmentRepo,

@@ -1,20 +1,41 @@
-﻿using MathCore.WPF.Commands;
+﻿using EmployeeDirectory.DAL.Emtityes;
+using EmployeeDirectory.Interfaces;
+using EmployeeDirectory.ViewModels.Reports;
 using MathCore.WPF.ViewModels;
-using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace EmployeeDirectory.ViewModels
 {
     internal class ReportsViewModel : ViewModel
     {
-        private ICommand _computeReportsCommand;
-        public ICommand ComputeReportsCommand => _computeReportsCommand ??=
-            new LambdaCommandAsync(OnComputeReportsExecuted, CanComputeReportsExecute);
+        private readonly IRepository<Department> _departmentRepo;
+        private readonly IRepository<Company> _companyRepo;
+        private readonly IRepository<Employee> _employeeRepo;
 
-        private bool CanComputeReportsExecute(object? arg) => true;
-
-        private async Task OnComputeReportsExecuted(object? obj)
+        private SalaryReportViewModel _salaryReport;
+        public SalaryReportViewModel SalaryReport
         {
+            get => _salaryReport;
+            set => Set(ref _salaryReport, value);
+        }
+
+        private EmployeesListViewModel _employeesList;
+        public EmployeesListViewModel EmployeesList
+        {
+            get => _employeesList;
+            set => Set(ref _employeesList, value);
+        }
+
+        public ReportsViewModel(
+            IRepository<Department> departmentRepo,
+            IRepository<Company> companyRepo,
+            IRepository<Employee> employeeRepo)
+        {
+            _departmentRepo = departmentRepo;
+            _companyRepo = companyRepo;
+            _employeeRepo = employeeRepo;
+
+            SalaryReport = new SalaryReportViewModel(_companyRepo);
+            EmployeesList = new EmployeesListViewModel(_companyRepo);
         }
     }
 }
