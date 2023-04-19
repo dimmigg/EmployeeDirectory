@@ -1,5 +1,4 @@
-﻿using EmployeeDirectory.DAL.Emtityes;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace EmployeeDirectory.Views.DirectoryPages
 {

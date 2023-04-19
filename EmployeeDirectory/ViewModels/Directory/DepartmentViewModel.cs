@@ -1,5 +1,4 @@
 ﻿using EmployeeDirectory.DAL.Emtityes;
-using System.Collections.Generic;
 
 namespace EmployeeDirectory.ViewModels.Directory
 {

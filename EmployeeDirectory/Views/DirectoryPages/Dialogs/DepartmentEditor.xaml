@@ -53,10 +53,10 @@
                        Text="Компания:"
                        Style="{StaticResource TextDialogCaption}"/>
             <ComboBox Grid.Column="1"
-                     Grid.Row="2"
-                     Style="{StaticResource TextDialogCaption}"
-                     ItemsSource="{Binding Companies}"
-                     SelectedItem="{Binding Company}"/>
+                      Grid.Row="2"
+                      Style="{StaticResource TextDialogCaption}"
+                      ItemsSource="{Binding Companies}"
+                      SelectedItem="{Binding Company}"/>
         </Grid>
     </DockPanel>
 </Window>

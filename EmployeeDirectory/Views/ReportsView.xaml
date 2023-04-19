@@ -9,17 +9,17 @@
     <TabControl>
         <TabItem Header="Ведомость по зарплате">
             <Frame Content="{Binding SalaryReport}"
-               VerticalAlignment="Top"
-               NavigationUIVisibility="Hidden"
-               Width="700"
-               Height="360"/>
+                   VerticalAlignment="Top"
+                   NavigationUIVisibility="Hidden"
+                   Width="700"
+                   Height="360"/>
         </TabItem>
         <TabItem Header="Список сотрудников">
             <Frame Content="{Binding EmployeesList}"
-               VerticalAlignment="Top"
-               NavigationUIVisibility="Hidden"
-               Width="700"
-               Height="360"/>
+                   VerticalAlignment="Top"
+                   NavigationUIVisibility="Hidden"
+                   Width="700"
+                   Height="360"/>
         </TabItem>
     </TabControl>
 </UserControl>

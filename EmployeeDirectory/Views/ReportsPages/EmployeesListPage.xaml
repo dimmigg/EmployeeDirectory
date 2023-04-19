@@ -40,8 +40,6 @@
             <ComboBox ItemsSource="{Binding Years}"
                       SelectedItem="{Binding SelectedYear}"
                       Margin="5"/>
-
-
         </StackPanel>
         </GroupBox>
         <DataGrid Grid.Row="1"

@@ -105,7 +105,6 @@
                      Grid.Row="7"
                      Style="{StaticResource TextDialogCaption}"
                      Text="{Binding Wage}"/>
-
         </Grid>
     </DockPanel>
 </Window>

@@ -3,7 +3,6 @@ using EmployeeDirectory.DAL.Emtityes.Base;
 using EmployeeDirectory.Interfaces;
 using EmployeeDirectory.ViewModels.Directory.Dialog;
 using EmployeeDirectory.Views.DirectoryPages.Dialogs;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 
