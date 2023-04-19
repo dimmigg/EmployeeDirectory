@@ -1,0 +1,122 @@
+﻿<UserControl x:Class="EmployeeDirectory.Views.DirectoryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:local="clr-namespace:EmployeeDirectory.Views"
+             xmlns:vm="clr-namespace:EmployeeDirectory.ViewModels"
+             mc:Ignorable="d">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadDataCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="2"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        
+        <StackPanel Orientation="Vertical"
+                    Grid.Column="0">
+            <GroupBox Header="Каталог"
+                      Margin="2">
+                <TreeView HorizontalAlignment="Stretch"
+                          VerticalAlignment="Top"
+                          ItemsSource="{Binding Companies}" 
+                          SelectedItemChanged="TreeView_SelectedItemChanged"
+                          Height="250"
+                          BorderThickness="0"
+                          ScrollViewer.VerticalScrollBarVisibility="Auto"
+                          Background="WhiteSmoke">
+                    <TreeView.ItemTemplate>
+                        <HierarchicalDataTemplate ItemsSource="{Binding Departments, UpdateSourceTrigger=PropertyChanged}">
+                            <Label Content="{Binding Name}"/>
+                            <HierarchicalDataTemplate.ItemTemplate>
+                                <HierarchicalDataTemplate ItemsSource="{Binding Employees}">
+                                    <Label Content="{Binding Name}"/>
+                                    <HierarchicalDataTemplate.ItemTemplate>
+                                        <DataTemplate>
+                                            <Label>
+                                                <Label.Content>
+                                                    <TextBlock>
+                                                        <Run Text="{Binding Surname}"/>
+                                                        <Run Text="{Binding FirstName}"/>
+                                                        <Run Text="{Binding SecondName}"/>
+                                                    </TextBlock>
+                                                </Label.Content>
+                                            </Label>
+                                        </DataTemplate>
+                                    </HierarchicalDataTemplate.ItemTemplate>
+                                </HierarchicalDataTemplate>
+                            </HierarchicalDataTemplate.ItemTemplate>
+                        </HierarchicalDataTemplate>
+                    </TreeView.ItemTemplate>
+                </TreeView>
+            </GroupBox>
+            <GroupBox Header="Добавление"
+                      Margin="2">
+                <GroupBox.Background>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,15">
+                        <GradientStop Color="White" Offset="0" />
+                        <GradientStop Color="LightGreen" Offset="0.2" />
+                    </LinearGradientBrush>
+                </GroupBox.Background>
+                <WrapPanel ItemWidth="90"
+                           HorizontalAlignment="Center">
+                    <Button Content="Компания"
+                            ToolTip="Добавить Компанию"
+                            Margin="5"
+                            Command="{Binding AddItemCommand}"
+                            CommandParameter="Company"/>
+                    <Button Content="Отдел"
+                            ToolTip="Добавить Отдел"
+                            Margin="5"
+                            Command="{Binding AddItemCommand}"
+                            CommandParameter="Department"/>
+                    <Button Content="Сотрудник"
+                            ToolTip="Добавить Сотрудника"
+                            Margin="5"
+                            Command="{Binding AddItemCommand}"
+                            CommandParameter="Employee"/>
+            </WrapPanel>
+            </GroupBox>
+            <GroupBox Header="Редактирование"
+                      Margin="2">
+                <GroupBox.Background>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,15">
+                        <GradientStop Color="White" Offset="0" />
+                        <GradientStop Color="LightSkyBlue" Offset="0.2" />
+                    </LinearGradientBrush>
+                </GroupBox.Background>
+                <WrapPanel ItemWidth="95"
+                           HorizontalAlignment="Center"
+                           Grid.Column="1">
+                    <Button Content="Изменить"
+                            Margin="5"
+                            IsEnabled="{Binding IsChoiceItem}"
+                            Command="{Binding EditItemCommand}"
+                            CommandParameter="{Binding SelectedItem}"/>
+                    <Button Content="Удалить"
+                            Margin="5"
+                            IsEnabled="{Binding IsChoiceItem}"
+                            Command="{Binding RemoveItemCommand}"
+                            CommandParameter="{Binding SelectedItem}"/>
+                </WrapPanel>
+            </GroupBox>
+        </StackPanel>
+        <Rectangle Margin="0 15 0 15" Grid.Column="1" Fill="LightGray"></Rectangle>
+        <StackPanel Orientation="Vertical"
+                    Grid.Column="2">
+            <Frame Content="{Binding CurrentPage}"
+               VerticalAlignment="Top"
+               Margin="2"
+               NavigationUIVisibility="Hidden"
+               Width="400"
+               Height="386"
+                   />
+        </StackPanel>
+    </Grid>
+</UserControl>

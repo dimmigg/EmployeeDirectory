@@ -1,0 +1,73 @@
+﻿<Page x:Class="EmployeeDirectory.Views.ReportsPages.SalaryReportPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:src="clr-namespace:EmployeeDirectory.Converters"
+      mc:Ignorable="d">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadDataCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Page.Resources>
+        <ResourceDictionary>
+            <src:SalaryCompanyConverter x:Key="CompanyConverter"/>
+            <src:SalaryDepartmentConverter x:Key="DepartmentConverter"/>
+        </ResourceDictionary>
+    </Page.Resources>
+    <ListBox ItemsSource="{Binding Companies}"
+             BorderThickness="0">
+        <ListBox.ItemTemplate>
+            <DataTemplate>
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name}" FontSize="14" FontWeight="Bold"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" Margin="10 0">
+                        <TextBlock Text="Подразделения:"/>
+                        <ListBox ItemsSource="{Binding Departments}"
+                                 BorderThickness="0">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="{Binding Name}" FontSize="12" FontWeight="Bold"/>
+                                        <StackPanel Orientation="Vertical" Margin="10 0">
+                                            <TextBlock Text="Сотрудники:"/>
+                                            <ListBox ItemsSource="{Binding Employees}"
+                                                     BorderThickness="0">
+                                                <ListBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Orientation="Vertical">
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBlock>
+                                                                    <Run Text="{Binding Surname}"/>
+                                                                    <Run Text="{Binding FirstName}"/>
+                                                                    <Run Text="{Binding SecondName}"/>
+                                                                    <Run Text="{Binding Wage}"/>
+                                                                </TextBlock>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ListBox.ItemTemplate>
+                                            </ListBox>
+                                        </StackPanel>
+                                        <TextBlock>
+                                                <Run Text="ЗП по отделу:"/>
+                                                <Run Text="{Binding Employees, Converter={StaticResource DepartmentConverter}}"/>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                    <TextBlock>
+                            <Run Text="ЗП по компании:"/>
+                            <Run Text="{Binding Departments, Converter={StaticResource CompanyConverter}}"/>
+                    </TextBlock>
+                </StackPanel>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+    </ListBox>
+</Page>
